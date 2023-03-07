@@ -1,0 +1,66 @@
+/*
+
+There is a 3D point and a line segment (bounded 3D line) given by endpoints.
+Write a method that will compute the distance from the point to the segment.
+Consider all possible locations of the point in relation to the segment.
+Handle all boundary cases.
+
+All vector operations are available from included Eigen library.
+Documentation: https://eigen.tuxfamily.org/dox/group__QuickRefPage.html
+
+*/
+
+#include <Eigen/Core>
+#include <Eigen/Geometry>
+
+using Eigen::Vector3d;
+
+// https://eigen.tuxfamily.org/dox/group__QuickRefPage.html
+
+// Method calculates a distance from point p to segment ab
+// a - coordinates of the first point of the segment
+// b - coordinates of the second point of the segment
+// p - coordinates of the point to calculate distance to the segment from
+// Returns distance
+double Distance(const Vector3d & a, const Vector3d & b, const Vector3d & p) {
+  // ************* YOUR CODE HERE *************
+  // Compute the direction and length of the segment
+  Vector3d segmentDir = b - a;
+  double segmentLength = segmentDir.norm();
+
+  // Normalize the segment direction vector
+  segmentDir.normalize();
+
+  // Compute the vector from a to p
+  Vector3d ap = p - a;
+
+  // Compute the projection of ap onto the segment direction
+  double t = ap.dot(segmentDir);
+
+  // Check if the projection falls outside of the segment
+  if (t < 0) {
+    // Point is closest to endpoint a
+    return (p - a).norm();
+  } else if (t > segmentLength) {
+    // Point is closest to endpoint b
+    return (p - b).norm();
+  } else {
+    // Point is closest to point on the segment
+    Vector3d closestPoint = a + t * segmentDir;
+    return (p - closestPoint).norm();
+  }
+  // ******************************************
+}
+
+#include <iostream>
+using namespace std;
+
+int main() {
+  
+  // This is only simple example.
+  // Solution must handle all cases.
+  
+  Vector3d a(0,0,0), b(1,0,0), p(1,1,0);
+  cout << "Distance = " << Distance(a, b, p) << endl;
+  return 0;
+}

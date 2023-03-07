@@ -1,0 +1,3 @@
+Propose an algorithm which defines a process of designing and improving a light and durable chair with a backrest.
+The structure of the chair should be made of a set of straight bars. 
+Present the solution in a form of flowchart (e.g. using draw.io) and demonstrate sample results according to the algorithm.
